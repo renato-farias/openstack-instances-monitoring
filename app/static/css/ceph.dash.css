@@ -11,7 +11,7 @@ h1 {
 }
 
 .panel-body, .panel-instance-list {
-    background-color: #ffe;
+    background-color: #ffc;
 }
 
 .panel-instance-list {
@@ -21,11 +21,28 @@ h1 {
 }
 
 .panel-instance {
-    background-color: #7a8288;
+    /*background-color: #7a8288;*/
+    /*background-color: #414344;*/
+    background-color: #fff;
+    border-color: #999;
+}
+
+.panel-instance .panel-body {
+    background-color: #fff;
+    color: #000;
+    font-weight: normal;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.block {
+    display: block;
 }
 
 .panel-instance .panel-title {
-    color: #fff;
+    color: #000;
 }
 
 .panel.panel-primary {
