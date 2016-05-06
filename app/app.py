@@ -7,17 +7,17 @@ import openstack
 
 from flask import Flask
 from routes import routes
-from werkzeug.contrib.cache import SimpleCache
+from werkzeug.contrib.cache import MemcachedCache
 
 app = Flask(settings.APPLICATION_NAME, static_url_path='')
 app.secret_key = 'openstack_monitoring'
 
 app.register_blueprint(routes)
 
-cache = SimpleCache()
+cache = MemcachedCache(['127.0.0.1:11211'])
 
 def setup_app(app):
-    caching.load_obj()
+    caching.load_servers()
     
 setup_app(app)
 
