@@ -1,0 +1,17 @@
+mongodb:
+  host: localhost
+  port: 27017
+
+projects:
+  Project1:
+    auth_url: 'http://keystone.endopint.project1:35357'
+    auth_user: admin
+    auth_pass: admin
+    auth_tentant: 'admin'
+    all_tentants: true
+  Project2:
+    auth_url: 'http://keystone.endopint.project1:35357'
+    auth_user: admin
+    auth_pass: admin
+    auth_tentant: 'admin'
+    all_tentants: true
