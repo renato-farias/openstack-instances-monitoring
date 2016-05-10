@@ -2,7 +2,15 @@
 
 from flask import Blueprint, current_app
 
-from api import _servers, _search, _users, _get_server, _flavors, _tenants, _images
+from api import _servers, \
+                _search, \
+                _users, \
+                _get_server, \
+                _flavors, \
+                _tenants, \
+                _images, \
+                _post_monitoring, \
+                _get_monitoring
 from static import index
 from caching import renew
 
@@ -17,4 +25,6 @@ routes.add_url_rule('/images', view_func=_images, methods=['GET'])
 routes.add_url_rule('/server/<server_id>', view_func=_get_server, methods=['GET'])
 routes.add_url_rule('/search/<s>', view_func=_search, methods=['GET'])
 routes.add_url_rule('/renew', view_func=renew, methods=['GET'])
+routes.add_url_rule('/monitoring/<instance_id>/<monitorying_type>', view_func=_get_monitoring, methods=['GET'])
+routes.add_url_rule('/monitoring/post', view_func=_post_monitoring, methods=['POST'])
 

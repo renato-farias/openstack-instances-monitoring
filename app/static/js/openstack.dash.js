@@ -55,7 +55,7 @@ $(function () {
         }
         return '<div class="row">'
                 + '<div class="col-md-3">'
-                 + '<div class="row"><div class="col-md-12"><span class="strong">Environment:</span> FRA</div></div>'
+                 + '<div class="row"><div class="col-md-12"><span class="strong">Environment:</span> ' + server.project + '</div></div>'
                  + '<div class="row"><div class="col-md-12"><span class="strong">Hypervisor Host:</span> ' + server.hypervisor + '</div></div>'
                  + '<div class="row"><div class="col-md-12"><span class="strong">Owner:</span> ' + server.user.name + ' (' + server.user.email + ')</div></div>'
                  + '<div class="row"><div class="col-md-12"><span class="strong">Tenant:</span> ' + server.tenant.name + '</div></div>'
@@ -72,7 +72,15 @@ $(function () {
                 + '<div class="col-md-3">'
                  + '<div class="row"><div class="col-md-12"><span class="strong">Image Name:</span> ' + server.image.name + '</div></div>'
                 + '</div>'
+               + '</div>'
+               + '<div class="row">'
+                + '<div class="col-md-6">'
+                 + '<div class="cpu_usage"></div>'
                 + '</div>'
+                + '<div class="col-md-6">'
+                 + '<div class="mem_usage"></div>'
+                + '</div>'
+               + '</div>'
     }
 
     load_servers = function() {
@@ -124,6 +132,8 @@ $(function () {
                     $('.panel-instance[data-instance="' + id + '"] .panel-body').html(
                         print_server_details(data)
                     );
+                    load_graph('.cpu_usage', data.id, 'cpu');
+                    load_graph('.mem_usage', data.id, 'mem');
                 }
             }
         });
@@ -146,6 +156,7 @@ $(function () {
 
     turn_collapsable = function() {
         $('.cd-collapsable').on("click", function (e) {
+            $('.panel-heading.cd-collapsable').not('.cd-collapsed').parent('.panel').find('.panel-body').empty().slideUp();
             if ($(this).hasClass('cd-collapsed')) {
                 // expand the panel
                 $(this).parent('.panel').find('.panel-body.hide');
@@ -158,6 +169,88 @@ $(function () {
                 $(this).parent('.panel').find('.panel-body').slideUp();
                 $(this).addClass('cd-collapsed');
             }
+        });
+    }
+
+
+    load_graph = function(target, instance_id, chart_type) {
+        var chart_type = typeof chart_type !== 'undefined' ? chart_type : 'cpu';
+        var chart_title = '';
+        var chart_label = '';
+        if (chart_type == 'cpu') {
+            chart_title = 'CPU usage';
+            chart_label = 'CPU';
+        } else if (chart_type == 'mem') {
+            chart_title = 'Memory usage';
+            chart_label = 'Memory';
+        }
+        $.getJSON('/monitoring/' + instance_id + '/' + chart_type, function (data) {
+
+            $(target).highcharts({
+                chart: {
+                    zoomType: 'x',
+                    height: '300'
+                },
+                title: {
+                    text: chart_title,
+                    align: 'left'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    // labels: {
+                    //     formatter: function () {
+                    //         return Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.value);
+                    //     },
+                    //     dateTimeLabelFormats: {
+                    //         minute: '%M',
+                    //         hour: '%H',
+                    //         day: '%d',
+                    //         month: '%m',
+                    //         year: '%Y'
+                    //     }
+                    // }
+                },
+                yAxis: {
+                    title: {
+                        text: '% of usage'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    area: {
+                        fillColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, Highcharts.getOptions().colors[0]],
+                                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                            ]
+                        },
+                        marker: {
+                            radius: 2
+                        },
+                        lineWidth: 1,
+                        states: {
+                            hover: {
+                                lineWidth: 1
+                            }
+                        },
+                        threshold: null
+                    }
+                },
+
+                series: [{
+                    type: 'area',
+                    name: chart_label,
+                    data: data.data
+                }]
+            });
         });
     }
 

@@ -13,6 +13,4 @@ MONGODB_HOST        = config.get('mongodb', {}).get('host', 'localhost')
 MONGODB_PORT        = config.get('mongodb', {}).get('port', 27017)
 MONGODB_BASE        = config.get('mongodb', {}).get('base', APPLICATION_NAME)
 
-CACHE_SERVERS_TIME  = 3600
-CACHE_FILENAME      = config.get('cache', {}).get('filename', 'instances.db')
-
+PROJECTS            = config.get('projects', [])
