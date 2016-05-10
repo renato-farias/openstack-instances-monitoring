@@ -1,5 +1,13 @@
 $(function () {
 
+    var reloadGraph;
+
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+
     function fmtBytes(bytes) {
         if (bytes==0) { return "0 bytes"; }
         var s = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'];
@@ -19,6 +27,9 @@ $(function () {
                  + '<h3 class="panel-title">'
                  + '<i class="glyphicon glyphicon-off icon-' + st + '"></i> '
                    + instance.name
+                   + '<small> ('
+                     + instance.id
+                   + ')</small>'
                  + '</h3>'
                + '</div>'
                + '<div class="panel-body hide">'
@@ -134,6 +145,10 @@ $(function () {
                     );
                     load_graph('.cpu_usage', data.id, 'cpu');
                     load_graph('.mem_usage', data.id, 'mem');
+                    reloadGraph = setInterval(function() {
+                        load_graph('.cpu_usage', data.id, 'cpu');
+                        load_graph('.mem_usage', data.id, 'mem');
+                    }, 60000);
                 }
             }
         });
@@ -156,6 +171,7 @@ $(function () {
 
     turn_collapsable = function() {
         $('.cd-collapsable').on("click", function (e) {
+            clearInterval(reloadGraph);
             $('.panel-heading.cd-collapsable').not('.cd-collapsed').parent('.panel').find('.panel-body').empty().slideUp();
             if ($(this).hasClass('cd-collapsed')) {
                 // expand the panel
@@ -213,7 +229,8 @@ $(function () {
                 yAxis: {
                     title: {
                         text: '% of usage'
-                    }
+                    },
+                    min: 0
                 },
                 legend: {
                     enabled: false

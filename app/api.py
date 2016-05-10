@@ -77,10 +77,16 @@ def _post_monitoring():
     cpu_usage   = f['cpu']
     mem_usage   = f['mem']
 
+    if cpu_usage == '' or cpu_usage is None:
+        cpu_usage = 0
+
+    if mem_usage == '' or mem_usage is None:
+        mem_usage = 0
+
     d = {
         'log_date': datetime.datetime.now(),
-        'cpu': cpu_usage,
-        'mem': mem_usage
+        'cpu': float(cpu_usage),
+        'mem': float(mem_usage)
     }
     get_instance_collection(instance_id).insert_one(d)
     return myjsonify({'status': 200})
@@ -100,9 +106,10 @@ def _get_monitoring(instance_id, monitorying_type):
         s['mem'] = 1
 
     d = []
-    result = get_instance_collection(instance_id).find(q, s)
+    result = get_instance_collection(instance_id).find(q, s).sort('log_date')
     for r in result:
-        # new_date = re.sub('\.[0-9]{6}', '', str(r['log_date']))
+        if r[monitorying_type] == '' or r[monitorying_type] == None:
+            r[monitorying_type] = 0
         d.append([
             # new_date,
             int(r['log_date'].strftime('%s')) * 1000,
