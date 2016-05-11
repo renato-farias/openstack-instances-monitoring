@@ -21,9 +21,10 @@ $ mkvirtualenv monitoring
 $ workon monitoring
 $ pip install -r setup/requirements.txt
 ```
-* run the app
+* change the setting and run the app
 ```sh
 $ cd openstack-instances-monitoring/app
+$ mv application_sample.yaml application.yaml
 $ gunicorn -b 0.0.0.0:8000 app:app --log-level info --env APP_ENV='production' --reload -w 4 --timeout 60
 ```
 * point your browser to http://SERVER:8000/
