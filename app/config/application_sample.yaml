@@ -2,6 +2,12 @@ mongodb:
   host: localhost
   port: 27017
 
+
+memcache:
+  host: 'localhost'
+  port: 11211
+
+
 projects:
   Project1:
     auth_url: 'http://keystone.endopint.project1:35357'

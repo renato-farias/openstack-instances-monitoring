@@ -15,7 +15,7 @@ app.secret_key = 'openstack_monitoring'
 
 app.register_blueprint(routes)
 
-servers = ['localhost:11211']
+servers = ['%s:%s' % (settings.MEMCACHED_HOST, str(settings.MEMCACHED_PORT))]
 memcache.SERVER_MAX_VALUE_LENGTH = 1024*1024*10
 
 cache = MemcachedCache(servers)

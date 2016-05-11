@@ -212,19 +212,7 @@ $(function () {
                     align: 'left'
                 },
                 xAxis: {
-                    type: 'datetime',
-                    // labels: {
-                    //     formatter: function () {
-                    //         return Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.value);
-                    //     },
-                    //     dateTimeLabelFormats: {
-                    //         minute: '%M',
-                    //         hour: '%H',
-                    //         day: '%d',
-                    //         month: '%m',
-                    //         year: '%Y'
-                    //     }
-                    // }
+                    type: 'datetime'
                 },
                 yAxis: {
                     title: {
