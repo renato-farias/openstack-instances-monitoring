@@ -2,8 +2,9 @@ mongodb:
   host: localhost
   port: 27017
 
-cache:
-  filename: 'instance.db'
+memcache:
+  host: 'localhost'
+  port: 11211
 
 projects:
   FRA:
