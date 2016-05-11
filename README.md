@@ -37,7 +37,7 @@ $ gunicorn -b 0.0.0.0:8000 app:app --log-level info --env APP_ENV='production' -
 ### Installing the collector on the Hypervisors
 * Get the script
 ```sh
-# wget -c http://localhost:8000/scripts/monit_instances.sh
+# wget -c http://SERVER:8000/scripts/monit_instances.sh
 ```
 * Edit the script pointing the server IP or Name to send data.
 * insert in the root's cron the following entry:
@@ -51,5 +51,7 @@ It's a tool with a simple endpoit API to collect data. Feel free using your imag
 
 
 ### How it looks
-![alt_tag](dashboard-1.png)
-![alt tag](dashboard-2.png)
+![Dashboard Image 1](dashboard-1.png)
+![Dashboard Image 2](dashboard-2.png)
+
+I'd like to say thank you to Crapworks. I used his template from [Ceph-Dash](https://github.com/Crapworks/ceph-dash) to turn easy my job =]
