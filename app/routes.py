@@ -10,7 +10,8 @@ from api import _servers, \
                 _tenants, \
                 _images, \
                 _post_monitoring, \
-                _get_monitoring
+                _get_monitoring, \
+                _get_usage_report
 from static import index
 from caching import renew
 
@@ -27,4 +28,5 @@ routes.add_url_rule('/search/<s>', view_func=_search, methods=['GET'])
 routes.add_url_rule('/renew', view_func=renew, methods=['GET'])
 routes.add_url_rule('/monitoring/<instance_id>/<monitorying_type>', view_func=_get_monitoring, methods=['GET'])
 routes.add_url_rule('/monitoring/post', view_func=_post_monitoring, methods=['POST'])
+routes.add_url_rule('/report/resources', view_func=_get_usage_report, methods=['GET'])
 

@@ -117,3 +117,30 @@ def _get_monitoring(instance_id, monitorying_type):
         ])
     return myjsonify({'data': d})
 
+
+def _get_usage_report():
+    # initializing the counter
+    report = {'_total': {'vms': 0, 'mem': 0, 'cpu': 0, 'disk': 0}}
+    servers = get_servers()
+    flavors = get_flavors()
+    for s in servers:
+        if s['project'] not in report.keys():
+            report[s['project']] = {'vms': 0, 'mem': 0, 'cpu': 0, 'disk': 0}
+        # increasing the vm number
+        report['_total']['vms'] += 1
+        report[s['project']]['vms'] += 1
+        # get flavor's information
+        for f in flavors:
+            if f['id'] == s['flavor_id']:
+                # increasing the cpu number
+                report['_total']['cpu'] += f['vcpus']
+                report[s['project']]['cpu'] += f['vcpus']
+                # increasing the mem number
+                report['_total']['mem'] += (f['ram']/1024)
+                report[s['project']]['mem'] += (f['ram']/1024)
+                # increasing the mem number
+                report['_total']['disk'] += f['disk']
+                report[s['project']]['disk'] += f['disk']
+                break
+
+    return myjsonify(report)

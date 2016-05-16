@@ -12,14 +12,24 @@
 
   <div class="container">
     <div class="well text-center">
-      <img src="/img/openstack-logo-full.png" />
-      <h1>Instances Monitor</h1>
-      <p>
-        <!--show warning icon if data is getting to old-->
-        <span id="last_update" style="display:none;" class="glyphicon glyphicon-warning-sign icon-warn"></span>
-        <!--add cluster fsid for informational purposes-->
-        <!-- <small id="cluster_fsid"></small> -->
-      </p>
+      <div class="row">
+        <div class="col-md-12">
+          <img src="/img/openstack-logo-full.png" />
+          <h1>Instances Monitor</h1>
+          <p>
+            <!--show warning icon if data is getting to old-->
+            <span id="last_update" style="display:none;" class="glyphicon glyphicon-warning-sign icon-warn"></span>
+            <!--add cluster fsid for informational purposes-->
+            <!-- <small id="cluster_fsid"></small> -->
+          </p>
+        </div>
+      </div>
+      <div class="row text-left menu">
+        <div class="col-md-12">
+          <a href="">All Instances</a> |
+          <a href="">Resources Usage Report</a>
+        </div>
+      </div>
     </div>
 
     <div class="panel panel-primary">

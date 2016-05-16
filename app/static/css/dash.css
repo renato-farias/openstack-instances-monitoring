@@ -108,3 +108,10 @@ h1 {
     padding: 2px;
     background-color: #272b30;
 }
+
+.row.menu {
+    margin-top: 10px;
+}
+a, a:hover {
+    color: #000;
+}
