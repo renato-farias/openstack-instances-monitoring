@@ -33,27 +33,6 @@ $(function () {
                  + '</h3>'
                + '</div>'
                + '<div class="panel-body hide">'
-                 // + '<div class="row">'
-                 //   + '<div class="col-md-3">'
-                 //     + '<div class="row"><div class="col-md-12"><span class="strong">Environment:</span> FRA</div></div>'
-                 //     + '<div class="row"><div class="col-md-12"><span class="strong">Hypervisor Host:</span> onix</div></div>'
-                 //     + '<div class="row"><div class="col-md-12"><span class="strong">Owner:</span> Nome (email@email)</div></div>'
-                 //     + '<div class="row"><div class="col-md-12"><span class="strong">Tenant:</span> B2W</div></div>'
-                 //   + '</div>'
-                 //   + '<div class="col-md-3">'
-                 //     + '<div class="row"><div class="col-md-12"><span class="strong">IP:</span> 10.0.0.0 (Fixo)</div></div>'
-                 //     + '<div class="row"><div class="col-md-12"><span class="strong">IP:</span> 10.0.0.0 (Flutuante)</div></div>'
-                 //   + '</div>'
-                 //   + '<div class="col-md-3">'
-                 //     + '<div class="row"><div class="col-md-12"><span class="strong">Flavor Name:</span> l1.medium</div></div>'
-                 //     + '<div class="row text-center"><div class="col-md-4"><span class="strong block">vCPUs:</span> 4 </div>'
-                 //     + '<div class="col-md-4"><span class="strong block">RAM:</span> 512 </div>'
-                 //     + '<div class="col-md-4"><span class="strong block">Disk:</span> 10 GB </div></div>'
-                 //   + '</div>'
-                 //   + '<div class="col-md-3">'
-                 //     + '<div class="row"><div class="col-md-12"><span class="strong">Image Name:</span> 10.0.0.0 Lorem ipsum do net la porem (Flutuante)</div></div>'
-                 //   + '</div>'
-                 // + '</div>'
                + '</div>'
              + '</div>'
     }
@@ -94,6 +73,17 @@ $(function () {
                + '</div>'
     }
 
+    print_current_report = function(n, d) {
+        line = '<tr>'
+               +  '<td>' + n + '</td>'
+               +   '<td>' + d.vms + '</td>'
+               +   '<td>' + d.cpu + '</td>'
+               +   '<td>' + d.mem + '</td>'
+               +   '<td>' + d.disk + '</td>'
+               + '</tr>';
+        return line;
+    }
+
     load_servers = function() {
         $('.panel-instance-list').empty();
         $.ajax({
@@ -109,6 +99,30 @@ $(function () {
                             turn_collapsable();
                         }
                     }
+                }
+            }
+        });
+    };
+
+    load_current_report = function() {
+        $('.table-report > tbody').empty();
+        $.ajax({
+            url: '/report/resources',
+            cache: false,
+            statusCode: {
+                200: function(data) {
+                    $.each(data, function(index, value) {
+                        if ( index != '_total' && index != '_size') {
+                            $('.table-report > tbody').append(
+                                print_current_report(index, data[index])
+                            ); 
+                        }
+                        if (data['_size'] == $('.table-report > tbody tr').length ) {
+                            $('.table-report > tbody').append(
+                                print_current_report('Total', data['_total'])
+                            );
+                        }
+                    });
                 }
             }
         });
@@ -259,8 +273,45 @@ $(function () {
         });
     }
 
-    
+    load_url = function(url, container) {
+        $.ajax({
+            url: url,
+            cache: false,
+            statusCode: {
+                200: function(data) {
+                    $(container).empty();
+                    $(container).html(data);
+                }
+            }
+        });
+    };
 
-    load_servers();
+    change_url = function(url) {
+        fullUrl = '/dashboard'
+        if (url) {
+            fullUrl += url;
+        }
+        window.history.pushState('', '', fullUrl);
+    }
+
+    _load_all_instances = function() {
+        url = '/instances';
+        load_url(url, '.content');
+        change_url(url);
+    }
+
+    _load_report = function() {
+        url = '/report';
+        load_url(url, '.content');
+        change_url(url);
+    }
+
+    $('.link.instances').click(function() {
+        _load_all_instances();
+    });
+
+    $('.link.report').click(function() {
+        _load_report();
+    });
 
 });

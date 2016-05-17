@@ -112,6 +112,20 @@ h1 {
 .row.menu {
     margin-top: 10px;
 }
-a, a:hover {
+
+span.link {
     color: #000;
+    cursor: pointer;
+}
+
+table {
+    background-color: #fff; 
+}
+
+table thead, table tbody, table tr, table td {
+    color: #000; 
+}
+
+h4 {
+    color: #111;
 }

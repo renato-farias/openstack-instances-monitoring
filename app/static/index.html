@@ -1,87 +1,54 @@
 <!doctype html>
 <html lang="us">
-<head>
-  <meta charset="utf-8">
-  <title>OpenStack Instances Monitor</title>
-  <link href="/css/bootstrap.min.slate.css" rel="stylesheet">
-  <link href="/css/bootstrap.icon-large.min.css" rel="stylesheet">
-  <link href="/css/dash.css" rel="stylesheet">
-  <link rel="shortcut icon" href="/img/favicon.ico" />
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <title>OpenStack Instances Monitor</title>
+    <link href="/css/bootstrap.min.slate.css" rel="stylesheet">
+    <link href="/css/bootstrap.icon-large.min.css" rel="stylesheet">
+    <link href="/css/dash.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+  </head>
+  <body>
 
-  <div class="container">
-    <div class="well text-center">
-      <div class="row">
-        <div class="col-md-12">
-          <img src="/img/openstack-logo-full.png" />
-          <h1>Instances Monitor</h1>
-          <p>
-            <!--show warning icon if data is getting to old-->
-            <span id="last_update" style="display:none;" class="glyphicon glyphicon-warning-sign icon-warn"></span>
-            <!--add cluster fsid for informational purposes-->
-            <!-- <small id="cluster_fsid"></small> -->
-          </p>
-        </div>
-      </div>
-      <div class="row text-left menu">
-        <div class="col-md-12">
-          <a href="">All Instances</a> |
-          <a href="">Resources Usage Report</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          Search
-        </h3>
-      </div>
-      <div class="panel-body" align="center">
-
+    <div class="container">
+      <div class="well text-center">
         <div class="row">
           <div class="col-md-12">
-            <div class="input-group">
-              <input type="text" name="instance_name" class="form-control" placeholder="Search..."/>
-              <span class="input-group-btn">
-                <button type='submit' name='clear' id='search-btn' class="btn btn-default">
-                  <i class="glyphicon glyphicon-remove"></i>
-                </button>
-              </span>
-            </div>
-          </div>  
+            <img src="/img/openstack-logo-full.png" />
+            <h1>Instances Monitor</h1>
+            <p>
+              <!--show warning icon if data is getting to old-->
+              <span id="last_update" style="display:none;" class="glyphicon glyphicon-warning-sign icon-warn"></span>
+              <!--add cluster fsid for informational purposes-->
+              <!-- <small id="cluster_fsid"></small> -->
+            </p>
+          </div>
         </div>
-
+        <div class="row text-left menu">
+          <div class="col-md-12">
+            <span class="link instances">All Instances</span> |
+            <span class="link report">Resources Usage Report</span>
+          </div>
+        </div>
       </div>
+
+      <div class="content"></div>
+
     </div>
 
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/globalize.min.js"></script>
+    <script type="text/javascript" src="/js/dx.chartjs.js"></script>
+    <script type="text/javascript" src="/js/jquery.flot.js"></script>
+    <script type="text/javascript" src="/js/jquery.flot.time.js"></script>
+    <script type="text/javascript" src="/js/jquery.flot.byte.js"></script>
+    <script type="text/javascript" src="/js/jquery.flot.tooltip.js"></script>
+    <script type="text/javascript" src="/js/highcharts.js"></script>
+    <script type="text/javascript" src="/js/openstack.dash.js"></script>
+    <script type="text/javascript" src="/js/signals.min.js"></script>
+    <script type="text/javascript" src="/js/crossroads.min.js"></script>
+    <script type="text/javascript" src="/js/routes.js"></script>
 
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          Instances
-        </h3>
-      </div>
-      <div class="panel-instance-list">
-
-      </div>
-    </div>
-
-
-  </div>
-
-  <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
-  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/js/globalize.min.js"></script>
-  <script type="text/javascript" src="/js/dx.chartjs.js"></script>
-  <script type="text/javascript" src="/js/jquery.flot.js"></script>
-  <script type="text/javascript" src="/js/jquery.flot.time.js"></script>
-  <script type="text/javascript" src="/js/jquery.flot.byte.js"></script>
-  <script type="text/javascript" src="/js/jquery.flot.tooltip.js"></script>
-  <script type="text/javascript" src="/js/openstack.dash.js"></script>
-  <script type="text/javascript" src="/js/highcharts.js"></script>
-
-
-</body>
+  </body>
 </html>

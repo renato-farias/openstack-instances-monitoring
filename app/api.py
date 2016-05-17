@@ -120,12 +120,13 @@ def _get_monitoring(instance_id, monitorying_type):
 
 def _get_usage_report():
     # initializing the counter
-    report = {'_total': {'vms': 0, 'mem': 0, 'cpu': 0, 'disk': 0}}
+    counter_zero = {'vms': 0, 'mem': 0, 'cpu': 0, 'disk': 0}
+    report = {'_total': counter_zero.copy()}
     servers = get_servers()
     flavors = get_flavors()
     for s in servers:
         if s['project'] not in report.keys():
-            report[s['project']] = {'vms': 0, 'mem': 0, 'cpu': 0, 'disk': 0}
+            report[s['project']] = counter_zero.copy()
         # increasing the vm number
         report['_total']['vms'] += 1
         report[s['project']]['vms'] += 1
@@ -142,5 +143,7 @@ def _get_usage_report():
                 report['_total']['disk'] += f['disk']
                 report[s['project']]['disk'] += f['disk']
                 break
+
+    report['_size'] = len(report.keys())-1
 
     return myjsonify(report)
