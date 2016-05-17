@@ -168,21 +168,6 @@ $(function () {
         });
     };
 
-
-    $('input[name="instance_name"]').on('keydown', function(e) {
-        if (e.which == 13) {
-            e.preventDefault();
-            if ($(this).val().length >= 3) {
-                search_servers($(this).val());
-            }
-        }
-    });
-
-    $('button[name="clear"]').on('click', function() {
-        $('input[name="instance_name"]').val('');
-        load_servers();
-    });
-
     turn_collapsable = function() {
         $('.cd-collapsable').on("click", function (e) {
             clearInterval(reloadGraph);
